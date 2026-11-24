@@ -1,0 +1,44 @@
+
+name: Build BudgieOS ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            live-build \
+            debootstrap \
+            squashfs-tools \
+            xorriso \
+            grub-pc-bin \
+            grub-efi-amd64-bin \
+            mtools
+
+      - name: Build BudgieOS
+        run: |
+          chmod +x build.sh
+          sudo ./build.sh
+
+      - name: Save ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: BudgieOS-Professional-ISO
+          path: "*.iso"
+          if-no-files-found: error
+          retention-days: 7
