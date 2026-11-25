@@ -29,5 +29,5 @@ jobs:
           name: BudgieOS-1.0-ISO
           path: "*.iso"
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 7BudgieOS_1.0_Budgie_Theme.zip
 
